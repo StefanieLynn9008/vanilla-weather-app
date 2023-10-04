@@ -29,15 +29,23 @@ function displayTemperature(response) {
   let humidityElement = document.querySelector("#humidity");
   let windElement = document.querySelector("#wind");
   let dateElement = document.querySelector("#date");
+  let iconElement = document.querySelector("#icon");
+
   temperatureElement.innerHTML = Math.round(response.data.temperature.current);
   cityElement.innerHTML = response.data.city;
   descriptionElement.innerHTML = response.data.condition.description;
   humidityElement.innerHTML = Math.round(response.data.temperature.humidity);
   windElement.innerHTML = Math.round(response.data.wind.speed);
   dateElement.innerHTML = formatDate(response.data.time * 1000);
+  iconElement.setAttribute(
+    "src",
+    `http://shecodes-assets.s3.amazonaws.com/api/weather/icons/${response.data.condition.icon}.png`
+  );
+  iconElement.setAttribute("alt", response.data.condition.icon);
 }
 
-let apiUrl = `https://api.shecodes.io/weather/v1/current?query=London&key=ta59o034a54d51cbbddfb3328040f28f&units-metric`;
+let city = "London";
+let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=ta59o034a54d51cbbddfb3328040f28f&units-metric`;
 
 console.log(apiUrl);
 axios.get(apiUrl).then(displayTemperature);
